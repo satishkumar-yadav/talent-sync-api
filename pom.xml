@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>4.0.5</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+
+	<groupId>com.sky</groupId>
+	<artifactId>talent-sync-api</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging> 
+
+	<name>talent-sync-api</name>
+	<description>An AI based Job Portal - Multi-Module Microservices System</description>
+	
+    <!-- <url/> 
+	<licenses>
+		<license/>
+	</licenses>
+	<developers>
+		<developer/>
+	</developers>
+	<scm>
+		<connection/>
+		<developerConnection/>
+		<tag/>
+		<url/>
+	</scm> -->
+
+    <!-- registering cloud aggregator as child module -->
+    <modules>
+        <module>cloud</module>
+		<module>services</module>
+		<module>common-lib</module>
+    </modules>
+
+	<properties>
+		<java.version>21</java.version>
+        <spring.boot.version>4.0.5</spring.boot.version>
+        <spring-cloud.version>2025.1.0</spring-cloud.version>
+        <jjwt.version>0.12.6</jjwt.version>
+        <lombok.version>1.18.36</lombok.version>  <!--1.18.48 -->
+	</properties>
+
+    <dependencyManagement>
+      <dependencies>
+        <dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-dependencies</artifactId>
+            <version>${spring-cloud.version}</version>
+            <type>pom</type>
+            <scope>import</scope>
+		</dependency>
+			<!-- manually added -->
+		<!-- <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-dependencies</artifactId>
+            <version>${spring.boot.version}</version>
+            <type>pom</type>
+            <scope>import</scope>
+		</dependency> -->
+        <dependency>
+			<groupId>com.sky</groupId>
+			<artifactId>talent-sync-common</artifactId>
+            <version>${project.version}</version>
+		</dependency>
+
+			<dependency>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok</artifactId>
+				<version>${lombok.version}</version>
+			</dependency>
+
+			<!-- JJWT API: Contains the interfaces and classes you will write your code against. This is needed at compile 
+time. -->
+<dependency>
+    <groupId>io.jsonwebtoken</groupId>
+    <artifactId>jjwt-api</artifactId>
+    <version>${jjwt.version}</version>
+    <!-- keeps api available at compile time -->
+	<!-- <scope>runtime</scope> -->
+</dependency>
+
+			<!-- JJWT Implementation (Only required at runtime): The actual engine that does the cryptographic work. It is only needed at <scope>runtime</scope> 
+so your project doesn't accidentally depend on internal, unstable code. -->
+<dependency>
+    <groupId>io.jsonwebtoken</groupId>
+    <artifactId>jjwt-impl</artifactId>
+    <version>${jjwt.version}</version>
+    <scope>runtime</scope>
+</dependency>
+
+			<!-- JJWT Jackson Serializer (Only required at runtime if using Jackson): Allows the library to read and write JSON strings using the popular Jackson framework. 
+Alternatively, you can swap this for jjwt-gson or jjwt-orgjson depending on your preference -->
+<dependency>
+    <groupId>io.jsonwebtoken</groupId>
+    <artifactId>jjwt-jackson</artifactId>
+    <version>${jjwt.version}</version>
+    <scope>runtime</scope>
+</dependency>
+
+        
+		<!-- <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-webmvc</artifactId>   
+			// <artifactId>spring-boot-starter-webmvc</artifactId> 
+		</dependency> -->
+
+			<!-- <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-webmvc-test</artifactId>
+			<scope>test</scope>
+		</dependency> -->  
+	</dependencies>
+    </dependencyManagement>
+
+	
+
+	<build>
+		<!--   *************     -->
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.13.0</version>
+
+				<configuration>
+					<release>21</release>
+
+					<annotationProcessorPaths>
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+							<version>${lombok.version}</version>
+						</path>
+					</annotationProcessorPaths>
+				</configuration>
+			</plugin>
+		</plugins>
+    <pluginManagement>
+        <plugins>
+            <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
+                <configuration>
+                    <source>21</source>
+                    <target>21</target>
+                </configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring.boot.version}</version>
+			</plugin>
+				<!-- plugin for creating auto docker image -->
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib.maven.plugin</artifactId>
+                <version>3.5.1</version>
+            </plugin>
+		</plugins>
+    </pluginManagement>
+		
+	</build>
+
+</project>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		  <groupId>com.sky</groupId>
+	    <artifactId>talent-sync-api</artifactId>
+		  <version>0.0.1-SNAPSHOT</version>
+      <relativePath>../pom.xml</relativePath> <!-- lookup parent path from repository -->
+	</parent> 
+    
+	<artifactId>talent-sync-common</artifactId>
+    <packaging>jar</packaging>
+	  
+	<name>talent-sync-common</name>
+	<description>Shared Library - enums, exceptions, and DTOs for all services</description>
+	
+   <dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-validation</artifactId>
+    </dependency>
+     <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <!-- <version>1.18.30</version> -->
+       <!-- This makes Lombok available for compilation without treating it as a normal runtime
+      dependency -->
+      <scope>provided</scope>
+      <optional>true</optional>
+      <!-- not valid******* -->
+      <!-- <scope>annotationProcessor</scope> -->
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-annotations</artifactId>
+      <!-- <version>2.15.2</version> -->
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+            <skip>true</skip>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>
