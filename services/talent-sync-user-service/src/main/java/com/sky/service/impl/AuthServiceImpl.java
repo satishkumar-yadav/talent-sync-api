@@ -2,6 +2,7 @@ package com.sky.service.impl;
 
 import java.time.LocalDateTime;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.sky.domain.UserRole;
@@ -20,11 +21,16 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor 
 public class AuthServiceImpl implements AuthService {
     
+     private final PasswordEncoder passwordEncoder;
      private final UserRepository userRepository;
+
+    //  AuthServiceImpl(PasswordEncoder passwordEncoder) {
+    //     this.passwordEncoder = passwordEncoder;
+    //  }
 
     // AuthServiceImpl(UserRepository userRepository) {
     //     this.userRepository = userRepository;
-    // }
+    // }  
 
      @Override 
      public AuthResponse signup(SignupRequest req) throws Exception {
@@ -41,7 +47,7 @@ public class AuthServiceImpl implements AuthService {
         User user = User.builder()
                     .fullName(req.getFullName())
                     .email(req.getEmail())
-                    .password(req.getPassword())
+                    .password(passwordEncoder.encode(req.getPassword()))
                     .role(req.getRole())
                     .phone(req.getPhone())
                     .lastLogin(LocalDateTime.now())
