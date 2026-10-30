@@ -2,6 +2,9 @@ package com.sky.service.impl;
 
 import java.time.LocalDateTime;
 
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +16,7 @@ import com.sky.payload.AuthResponse;
 import com.sky.payload.LoginRequest;
 import com.sky.payload.SignupRequest;
 import com.sky.repository.UserRepository;
+import com.sky.security.JwtProvider;
 import com.sky.service.AuthService;
 
 import lombok.RequiredArgsConstructor;
@@ -21,6 +25,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor 
 public class AuthServiceImpl implements AuthService {
     
+     private final JwtProvider jwtProvider;   //
      private final PasswordEncoder passwordEncoder;
      private final UserRepository userRepository;
 
@@ -55,11 +60,16 @@ public class AuthServiceImpl implements AuthService {
                     .build();
 
         User savedUser = userRepository.save(user);
+
+        Authentication authentication = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword());
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        String jwt = jwtProvider.generateToken(authentication, savedUser.getId());  // jwtProvider directly
         
         AuthResponse res = new AuthResponse();
         res.setTitle("Welcome "+savedUser.getFullName());
         res.setMessage("Registered Successfully");
-        res.setJwt("jwt");
+        res.setJwt(jwt);
         res.setUser(UserMapper.toDTO(savedUser));
 
        // userRepository
