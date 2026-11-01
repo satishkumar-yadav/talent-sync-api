@@ -72,7 +72,7 @@ public class AuthServiceImpl implements AuthService {
         AuthResponse res = new AuthResponse();
         res.setTitle("Welcome "+savedUser.getFullName());
         res.setMessage("Registered Successfully");
-        res.setJwt("jwt");
+        res.setJwt(jwt);
         res.setUser(UserMapper.toDTO(savedUser));
 
        // userRepository
@@ -93,12 +93,12 @@ public class AuthServiceImpl implements AuthService {
          userRepository.save(user);
 
          AuthResponse res = new AuthResponse();
-         res.setTitle("Welcome " + user.getFullName());
-         res.setMessage("Registered Successfully");
-         res.setJwt("jwt");
+         res.setTitle("Welcome back -- " + user.getFullName());
+         res.setMessage("Logged in Successfully");
+         res.setJwt(jwt);
          res.setUser(UserMapper.toDTO(user));
 
-         return null;
+         return res;
      }
 
      private Authentication authenticate(String email, String password) throws Exception{

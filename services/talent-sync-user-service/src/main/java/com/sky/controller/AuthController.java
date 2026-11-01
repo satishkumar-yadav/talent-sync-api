@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sky.payload.AuthResponse;
+import com.sky.payload.LoginRequest;
 import com.sky.payload.SignupRequest;
 import com.sky.service.AuthService;
 
@@ -23,6 +24,11 @@ public class AuthController {
     @PostMapping("/signup") 
     public ResponseEntity<AuthResponse> signup(@RequestBody @Valid SignupRequest req) throws Exception{
         return ResponseEntity.ok(authService.signup(req));
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<AuthResponse> login(@RequestBody @Valid LoginRequest req) throws Exception {
+        return ResponseEntity.ok(authService.login(req));
     }
 }
   

@@ -8,6 +8,6 @@ public interface AuthService {
     
     AuthResponse signup(SignupRequest req) throws Exception; // throws UserAlreadyExistsException
 
-    AuthResponse login(LoginRequest req);
+    AuthResponse login(LoginRequest req) throws Exception;
 }
  
